@@ -45,6 +45,7 @@ def check_move
 end
 
 def set_move
+	#remember push does not replace-need to fix this
 	@board[@user_choice] << @sym
 	@board
 end

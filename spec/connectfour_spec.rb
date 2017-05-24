@@ -56,7 +56,9 @@ describe ConnectFour do
 	end
 
 	describe "#set_move" do
-		it "changes board to represent user choice" do			
+		#remember push does not replace-need to fix this
+		it "changes board to represent user choice" do
+			game.set_board			
 			game.instance_variable_set :@counter, 2
 			game.set_symbol
 			game.instance_variable_set :@user_choice, 2
