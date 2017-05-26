@@ -56,7 +56,6 @@ describe ConnectFour do
 	end
 
 	describe "#set_move" do
-		#remember push does not replace-need to fix this
 		it "changes board to represent user choice" do
 			game.set_board			
 			game.instance_variable_set :@counter, 2
@@ -64,6 +63,15 @@ describe ConnectFour do
 			game.instance_variable_set :@user_choice, 2
 			expect(game.set_move).to eql([["_", "_", "_", "_"],["_", "_", "_", "_"],
 									  ["1", "_", "_", "_"],["_", "_", "_", "_"]])
+		end
+
+		it "changes board when symbol is 0" do
+			game.set_board			
+			game.instance_variable_set :@counter, 3
+			game.set_symbol
+			game.instance_variable_set :@user_choice, 1
+			expect(game.set_move).to eql([["_", "_", "_", "_"],["0", "_", "_", "_"],
+									  ["_", "_", "_", "_"],["_", "_", "_", "_"]])
 		end
 	end
 
@@ -75,7 +83,32 @@ describe ConnectFour do
 		end
 	end
 	
-	
+	describe "#check" do
+		it "checks if bottom row is all 1" do
+			game.instance_variable_set :@board, [["1", "_", "_", "_"],["1", "_", "_", "_"],
+									  			["1", "_", "_", "_"],["1", "_", "_", "_"]]
+			expect(game.check).to eql("Player 1 wins!")
+		end
+
+		it "checks if top row is all 0" do
+			game.instance_variable_set :@board, [["0", "_", "1", "0"],["0", "_", "_", "0"],
+									  			["1", "_", "_", "0"],["1", "_", "_", "0"]]
+			expect(game.check).to eql("Player 0 wins!")
+		end
+
+		it "checks if a diagonal row is all 0" do
+			game.instance_variable_set :@board, [["0", "_", "1", "0"],["0", "0", "_", "1"],
+									  			["1", "_", "0", "1"],["1", "_", "_", "0"]]
+			expect(game.check).to eql("Player 0 wins!")
+		end
+
+		it "checks if a 'vertical' row is all 1" do
+			game.instance_variable_set :@board, [["1", "1", "1", "1"],["0", "0", "_", "1"],
+									  			["1", "_", "0", "1"],["1", "_", "_", "0"]]
+			expect(game.check).to eql("Player 1 wins!")
+		end
+
+	end
 
 	describe "#gameplay" do
 		it "continues for 16 turns" do

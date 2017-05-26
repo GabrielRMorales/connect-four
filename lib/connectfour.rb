@@ -45,8 +45,8 @@ def check_move
 end
 
 def set_move
-	#remember push does not replace-need to fix this
-	@board[@user_choice] << @sym
+	@board[@user_choice].pop
+	@board[@user_choice].unshift(@sym)
 	@board
 end
 
@@ -57,6 +57,35 @@ def draw
 	print y }
 	puts ""	}
 end
+
+def check
+  win_conditions= [
+
+    [@board[0][0], @board[1][0],@board[2][0],@board[3][0]],
+    [@board[0][1], @board[1][1],@board[2][1],@board[3][1]],
+    [@board[0][2], @board[1][2],@board[2][2],@board[3][2]],
+    [@board[0][3], @board[1][3],@board[2][3],@board[3][3]],
+
+    [@board[0][0], @board[1][1],@board[2][2],@board[3][3]],
+    [@board[3][0], @board[2][1],@board[1][2],@board[0][3]],
+
+    [@board[0][0], @board[0][1],@board[0][2],@board[0][3]],
+    [@board[1][0], @board[1][1],@board[1][2],@board[1][3]],
+    [@board[2][0], @board[2][1],@board[2][2],@board[2][3]],
+    [@board[3][0], @board[3][1],@board[3][2],@board[3][3]],
+
+	]
+
+  win_conditions.each do |x|
+    if x.all? {|y| y==x[0] && x[0]!="_"}
+      @gameover=true
+      puts "Player #{x[0]} wins!"
+      return "Player #{x[0]} wins!"     
+    end
+  end
+  nil
+end
+
 
 def gameplay
 	while @gameover==false && counter<17 do
