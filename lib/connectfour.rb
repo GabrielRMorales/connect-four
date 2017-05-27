@@ -27,14 +27,15 @@ def show_moves
 end
 
 def set_symbol
-  @counter%2==0 ? @sym="1": @sym="0"  
+  @counter%2==0 ? @sym="1" : @sym="0"  
 end
 
 def get_user_choice
-	@user_choice=gets.chomp
+	@user_choice=gets.chomp.to_i
+	puts "user chose #{@user_choice}"
 end
 
-#try to make a while loop of this
+
 def check_move
 	if @user_options.include? (@user_choice)
 		return "valid"
@@ -45,8 +46,9 @@ def check_move
 end
 
 def set_move
-	@board[@user_choice].pop
-	@board[@user_choice].unshift(@sym)
+	pos=@board[@user_choice].index("_")
+
+	@board[@user_choice][pos]=@sym
 	@board
 end
 
@@ -86,9 +88,17 @@ def check
   nil
 end
 
-
 def gameplay
+	set_board
+	draw
 	while @gameover==false && counter<17 do
+		show_moves
+		set_symbol
+		get_user_choice
+		check_move
+		set_move
+		draw
+		check	
 		@user_options=[]
 		@counter+=1
 	end
@@ -96,5 +106,7 @@ def gameplay
 end
 
 
-
 end
+
+game=ConnectFour.new
+game.gameplay

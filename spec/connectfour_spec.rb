@@ -53,6 +53,18 @@ describe ConnectFour do
 			game.instance_variable_set :@user_choice, 1
 			expect(game.check_move).to eql("valid")
 		end
+
+		it "checks if user's choice is valid" do
+			game.instance_variable_set :@user_options, [0,1,2,3]
+			game.instance_variable_set :@user_choice, 1
+			expect(game.check_move).to eql("valid")
+		end
+
+		#it "checks if user's choice is not valid" do
+		#	game.instance_variable_set :@user_options, [0,1,2]
+		#	game.instance_variable_set :@user_choice, 3
+		#	expect(game.check_move).to eql("not valid")
+		#end
 	end
 
 	describe "#set_move" do
@@ -73,6 +85,18 @@ describe ConnectFour do
 			expect(game.set_move).to eql([["_", "_", "_", "_"],["0", "_", "_", "_"],
 									  ["_", "_", "_", "_"],["_", "_", "_", "_"]])
 		end
+
+		it "finds first available slot" do
+			game.instance_variable_set :@board, [["0", "1", "_", "_"],["0", "1", "_", "_"],
+									  ["_", "_", "_", "_"],["_", "_", "_", "_"]]		
+			game.instance_variable_set :@counter, 3
+			game.set_symbol
+			game.instance_variable_set :@user_choice, 1
+			expect(game.set_move).to eql([["0", "1", "_", "_"],["0", "1", "0", "_"],
+									  ["_", "_", "_", "_"],["_", "_", "_", "_"]])
+			
+		end
+
 	end
 
 	describe "#draw" do
@@ -110,9 +134,10 @@ describe ConnectFour do
 
 	end
 
-	describe "#gameplay" do
-		it "continues for 16 turns" do
-			expect(game.gameplay).to eql(true)
-		end
-	end
+	#describe "#gameplay" do
+	#	it "continues for 16 turns" do
+	#		expect(game.gameplay).to eql(true)
+	#	end
+	#end
+	
 end
